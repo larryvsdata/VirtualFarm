@@ -1,0 +1,13 @@
+<h1>Welcome <%= @owner.name%> to your page! </h1>
+
+
+<% if @owner.farms != []%>
+<h2>Farms you own are: </h2>
+  <%@owner.farms.each do |farm|%>
+      <ol> <%= farm.name%></ol>
+      <ul>Net worth: <%= farm.get_value%> </ul>
+  <%end%>
+
+<%else%>
+  <p>You don't have any farms at the moment</p>
+<%end%>

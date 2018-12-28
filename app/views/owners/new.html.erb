@@ -1,0 +1,23 @@
+<h1> New Farm Owner</h1>
+
+<%= form_for(@owner) do |f|%>
+  <div class="field">
+    <%= f.label :name %> <br>
+    <%= f.text_field :name %> <br>
+  </div>
+
+  <div class="field">
+    <%= f.label :password %> <br>
+    <%= f.password_field :password  %> <br>
+  </div>
+
+  <div class="field">
+    <%= f.label :money %> <br>
+    <%= f.number_field :money %> <br>
+  </div>
+
+  <div class="actions">
+    <%= f.submit %> <br>
+  </div>
+
+<%end%>
