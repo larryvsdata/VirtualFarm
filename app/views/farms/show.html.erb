@@ -1,1 +1,9 @@
-<h1> </h1>
+<h1> Farm <%= @farm.name%>'s Page</h1>
+
+<ul> This farm has a net worth of <%= @farm.get_value%>$</ul>
+<p>
+It has :
+<%@farm.animals.each do |animal|%>
+  <ul> <%= pluralize(animal.quantity,animal.name)%></ul>
+<%end%>
+</p>

@@ -17,7 +17,7 @@ class Owner < ApplicationRecord
       self.pay(a_farm.get_value)
       a_farm.available = false
       a_farm.save
-      return "Bought #{a_farm.name}"
+      return "Successfully bought #{a_farm.name}"
     else
       return "Insufficient money."
     end

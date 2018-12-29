@@ -1,0 +1,26 @@
+<% if @owner%>
+  <p>Welcome <%= @owner.name%>!</p>
+<%end%>
+
+<h1>Farms available for purchase:</h1>
+<% if @available_farms %>
+  <% @available_farms.each do |farm|%>
+    <% if farm.get_value > 0%>
+      <%=farm.name%> has :
+      <%farm.animals.each do |animal|%>
+        <ol> <%= pluralize(animal.quantity,animal.name)%></ol>
+      <%end%>
+      <ul>Quote: <%=farm.get_value%> </ul>
+      <% if @owner%>
+          <form action="/farms/buy_farm" method="post">
+            <%= tag(:input , :type => "hidden" , :name => :farm_id , :value => farm.id)%>
+            <input type='submit' value="Buy this farm">
+          </form>
+      <%end%>
+    <%end%>
+  <%end%>
+
+  <%else%>
+    <p>None at the moment. Please check back later. </p>
+
+  <%end%>
