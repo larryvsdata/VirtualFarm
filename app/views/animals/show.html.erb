@@ -1,0 +1,22 @@
+
+<% if params[:farm_id]%>
+  <h1>Belonging to  <%=Farm.find(params[:farm_id]).name %> </h1>
+<%end%>
+
+
+<div>
+<label>Name : </label>
+<ul><%=@animal.name %> </ul>
+</div>
+
+<div>
+<label>Quantity : </label>
+<ul><%=@animal.quantity %> </ul>
+</div>
+
+<div>
+<label>Unit Price : </label>
+<ul><%=@animal.unit_price %></ul>
+</div>
+
+<%= link_to 'Back to Index' , root_path%>

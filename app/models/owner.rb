@@ -17,6 +17,8 @@ class Owner < ApplicationRecord
       self.pay(a_farm.get_value)
       a_farm.available = false
       a_farm.save
+
+    #  binding.pry
       return "Successfully bought #{a_farm.name}"
     else
       return "Insufficient money."
@@ -26,7 +28,9 @@ class Owner < ApplicationRecord
   def sell_farm(a_farm)
     self.get_paid(a_farm.get_value)
     a_farm.available = true
+    
     a_farm.save
+  #  binding.pry
     self.farms.delete(a_farm)
     return "Sold #{a_farm.name}"
   end

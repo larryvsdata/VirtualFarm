@@ -1,5 +1,6 @@
 <% if @owner%>
   <p>Welcome <%= @owner.name%>!</p>
+  <p>You have <%= @owner.money%>$.</p>
 <%end%>
 
 <h1>Farms available for purchase:</h1>
@@ -23,4 +24,8 @@
   <%else%>
     <p>None at the moment. Please check back later. </p>
 
+  <%end%>
+ <br> <br>
+  <% if current_owner%>
+    <%=link_to "Sign Out" , signout_path%>
   <%end%>

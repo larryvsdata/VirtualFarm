@@ -7,3 +7,14 @@ It has :
   <ul> <%= pluralize(animal.quantity,animal.name)%></ul>
 <%end%>
 </p>
+
+
+<% if current_owner.admin %>
+  <%= form_for(Animal.new)  do |f|%>
+    <%= f.hidden_field :farm_id , value: @farm.id%> </br></br>
+    <label>Name:  </label>    <input type="text_field" id="animal[name]" name="animal[name]"></br>
+    <label>Quantity: </label>  <input type="number_field" id="animal[quantity]" name="animal[quantity]"></br>
+    <label>Unit Price: </label>  <input type="number_field" id="animal[unit_price]" name="animal[unit_price]"></br>
+  <%= button_tag "Add new animal to this farm"%>
+  <%end%>
+<%end%>
