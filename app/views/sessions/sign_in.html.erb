@@ -1,5 +1,12 @@
 <h1> Sign In </h1>
 
+<%if current_owner%>
+  <p> You are already signed in as <%=current_owner.name%>. </p>
+  <%= link_to "Sign Out" , signout_path , method: 'delete' %> <br><br>
+<%end%>
+
+
+
 <br>
 
 <%= form_tag signin_path do %>

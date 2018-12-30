@@ -7,7 +7,7 @@ class SessionsController < ApplicationController
     #binding.pry
     owner= Owner.find_by(name: params[:owner][:name])
     if owner.authenticate(params[:owner][:password])
-      
+
       session[:owner_id] = owner.id
       redirect_to owner_path(owner)
     else
@@ -17,6 +17,6 @@ class SessionsController < ApplicationController
 
   def sign_out
     session.clear
-    redirect_to root_path
+    redirect_to signin_path
   end
 end

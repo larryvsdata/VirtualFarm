@@ -1,6 +1,9 @@
 
-<% if params[:farm_id]%>
-  <h1>Belonging to  <%=Farm.find(params[:farm_id]).name %> </h1>
+
+
+
+<% if @farm%>
+  <h1>Belonging to  <%=@farm.name %> </h1>
 <%end%>
 
 

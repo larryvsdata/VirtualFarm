@@ -1,8 +1,8 @@
 Rails.application.routes.draw do
-  resources :animals
+  resources :animals , only: [ :edit  , :create , :new , :show , :index]
 
   resources :farms do
-    resources :animals , only: [:show , :new , :edit]
+    resources :animals , only: [:show , :new , :edit  , :create , :index]
   end
 
   resources :owners , only: [:show ]

@@ -11,9 +11,17 @@
             <%= tag(:input , :type => "hidden" , :name => :farm_id , :value => farm.id)%>
             <input type='submit' value="Sell this farm">
           </form>
+          <br>
       <%end%>
   <%end%>
 
 <%else%>
-  <p>You don't have any farms at the moment</p>
+  <p>You don't have any farms at the moment.</p>
+<%end%>
+
+
+<%= link_to 'Index Page' , root_path%>
+<br><br>
+<%if current_owner%>
+  <%= link_to "Sign Out" , signout_path , method: 'delete' %> <br><br>
 <%end%>

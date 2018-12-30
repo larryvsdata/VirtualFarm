@@ -1,6 +1,43 @@
 class FarmsController < ApplicationController
 before_action :set_farm , only: [:show ,:edit , :update]
+before_action :only_admin , only: [:new ,:create, :edit , :update]
 skip_before_action :verify_authenticity_token
+
+
+  def new
+    @farm =Farm.new
+  end
+
+  def create
+    #binding.pry
+    @farm = Farm.new(farm_params)
+
+    if @farm.save
+      flash[:alert] = "Farm #{@farm.name} created, successfully."
+      redirect_to farm_path(@farm)
+    else
+      flash[:alert] = "Failed to create farm."
+      redirect_to new_farm_path
+    end
+
+  end
+
+  def edit
+
+  end
+
+  def update
+
+    if @farm.update(farm_params)
+      flash[:alert] = "Farm #{@farm.name} updated, successfully."
+      redirect_to farm_path(@farm)
+    else
+      flash[:alert] = "Failed to update the farm #{@farm.name}."
+      redirect_to edit_farm_path
+    end
+  end
+
+
   def show
 
   end
@@ -39,6 +76,13 @@ skip_before_action :verify_authenticity_token
 
   def farm_params
     params.require(:farm).permit(:name  )
+  end
+
+  def only_admin
+    if !is_signed_in? || !current_owner.admin
+      flash[:alert] = "You must be signed in as an administrator to browse this page."
+      redirect_to root_path
+    end
   end
 
 end

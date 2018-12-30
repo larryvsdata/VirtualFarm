@@ -1,6 +1,6 @@
-<% if @owner%>
-  <p>Welcome <%= @owner.name%>!</p>
-  <p>You have <%= @owner.money%>$.</p>
+<% if current_owner%>
+  <p>Welcome <%= current_owner.name%>!</p>
+  <p>You have <%= current_owner.money%>$.</p>
 <%end%>
 
 <h1>Farms available for purchase:</h1>
@@ -12,7 +12,7 @@
         <ol> <%= pluralize(animal.quantity,animal.name)%></ol>
       <%end%>
       <ul>Quote: <%=farm.get_value%> </ul>
-      <% if @owner%>
+      <% if current_owner%>
           <form action="/farms/buy_farm" method="post">
             <%= tag(:input , :type => "hidden" , :name => :farm_id , :value => farm.id)%>
             <input type='submit' value="Buy this farm">
@@ -27,5 +27,7 @@
   <%end%>
  <br> <br>
   <% if current_owner%>
-    <%=link_to "Sign Out" , signout_path%>
+    <%=link_to "Your Farms" , owner_path(current_owner)%> <br>
+    <%=link_to "Sign Out" , signout_path , method: 'delete'%>
+
   <%end%>

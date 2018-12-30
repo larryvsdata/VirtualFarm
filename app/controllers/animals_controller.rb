@@ -1,30 +1,63 @@
 class AnimalsController < ApplicationController
-  before_action :only_admin , only: [:create ,:edit , :update]
+  before_action :only_admin , only: [:create ,:edit , :update , :new]
   before_action :set_animal , only: [:show]
 
-  def create
-    @farm = Farm.find_by(id: params[:animal][:farm_id])
-    @farm.animals.build(animal_params)
+  def new
+    @animal = Animal.new
+  #  binding.pry
+  end
 
-    if @farm.save
-      flash[:alert] = "Successfully created #{@farm.animals.last.name} in #{@farm.name} "
-      redirect_to farm_animal_path(@farm ,  @farm.animals.last)
-    else
-      flash[:alert] = "Failed to create the animal in #{@farm.name} "
-      redirect_to new_farm_animal_path
+
+  def create
+    #binding.pry
+    if params[:animal][:farm_id]
+      @farm = Farm.find_by(id: params[:animal][:farm_id])
+      @farm.animals.build(animal_params)
+
+        if   @farm && @farm.save
+          flash[:alert] = "Successfully created #{@farm.animals.last.name} in #{@farm.name} "
+          redirect_to farm_animal_path(@farm ,  @farm.animals.last)
+        else
+          flash[:alert] = "Failed to create the animal in #{@farm.name} "
+          redirect_to new_farm_animal_path(@farm)
+        end
+
+      else
+        flash[:alert] = "Animals can be created through farms "
+        redirect_to farms_path
+      end
+
     end
 
     def show
-    #  binding.pry
+      #binding.pry
       if params[:farm_id]
-        binding.pry
+      #  binding.pry
         @farm = Farm.find_by(id: params[:farm_id])
-        redirect_to farm_animal_path(@farm , @animal)
+      #  redirect_to farm_animal_path(@farm , @animal)
+
+    else
+      flash[:alert] = "Animals can be reached through farms "
+      redirect_to root_path
       end
     end
 
 
-  end
+    def index
+    #  binding.pry
+      if params[:farm_id]
+      #  binding.pry
+        @farm = Farm.find_by(id: params[:farm_id])
+        redirect_to farm_path(@farm )
+
+    else
+      flash[:alert] = "Animals can be reached through farms "
+      redirect_to root_path
+      end
+    end
+
+
+
 
 
   private

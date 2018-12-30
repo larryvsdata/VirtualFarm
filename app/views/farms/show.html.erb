@@ -3,13 +3,19 @@
 <ul> This farm has a net worth of <%= @farm.get_value%>$</ul>
 <p>
 It has :
-<%@farm.animals.each do |animal|%>
-  <ul> <%= pluralize(animal.quantity,animal.name)%></ul>
+<% if !@farm.animals.empty?%>
+  <%@farm.animals.each do |animal|%>
+    <ul> <%= pluralize(animal.quantity,animal.name)%></ul>
+  <%end%>
+
+<%else%>
+  <ul>No animals at the moment. </ul>
 <%end%>
 </p>
 
-
+<br><br><br>
 <% if current_owner.admin %>
+  <p>Add an animal: </p>
   <%= form_for(Animal.new)  do |f|%>
     <%= f.hidden_field :farm_id , value: @farm.id%> </br></br>
     <label>Name:  </label>    <input type="text_field" id="animal[name]" name="animal[name]"></br>
@@ -18,3 +24,6 @@ It has :
   <%= button_tag "Add new animal to this farm"%>
   <%end%>
 <%end%>
+
+<br>
+<%= link_to 'Index Page' , root_path%>
