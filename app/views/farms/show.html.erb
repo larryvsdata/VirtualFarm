@@ -27,3 +27,7 @@ It has :
 
 <br>
 <%= link_to 'Index Page' , root_path%>
+
+<% if current_owner.admin %>
+    <%= link_to "Delete this Farm" , delete_farm_path(@farm) , method: 'delete'%>
+<%end%>

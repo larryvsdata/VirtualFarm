@@ -16,7 +16,8 @@
           <form action="/farms/buy_farm" method="post">
             <%= tag(:input , :type => "hidden" , :name => :farm_id , :value => farm.id)%>
             <input type='submit' value="Buy this farm">
-          </form>
+          </form><br>
+            <%= link_to "Delete this Farm" , delete_farm_path(farm) , method: 'delete'%><br><br>
       <%end%>
     <%end%>
   <%end%>
@@ -28,6 +29,10 @@
  <br> <br>
   <% if current_owner%>
     <%=link_to "Your Farms" , owner_path(current_owner)%> <br>
-    <%=link_to "Sign Out" , signout_path , method: 'delete'%>
+    <%=link_to "Sign Out" , signout_path , method: 'delete'%><br>
+
+    <% if current_owner.admin%>
+      <%=link_to "Add New Farm" , new_farm_path %>
+    <%end%>
 
   <%end%>

@@ -69,6 +69,24 @@ skip_before_action :verify_authenticity_token
     redirect_to root_path
   end
 
+  def destroy
+    #binding.pry
+    @farm = Farm.find(params[:id])
+    title= @farm.name
+    if @farm.owners == []
+      @farm.destroy
+      flash[:alert]="Farm #{title} deleted."
+      redirect_to root_path
+    else
+      owner = @farm.owners.first
+      @farm.destroy
+      flash[:alert]="Farm #{title} deleted."
+      redirect_to owner_path(owner)
+    end
+
+  end
+
+
   private
   def set_farm
     @farm = Farm.find(params[:id])
