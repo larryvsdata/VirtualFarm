@@ -22,4 +22,8 @@
 <ul><%=@animal.unit_price %></ul>
 </div>
 
+<%if current_owner.admin && @farm %>
+  <%= link_to "Delete this Animal" , delete_animal_path(@farm , @animal) , method: 'delete'%><br><br>
+<%end%>
+
 <%= link_to 'Back to Index' , root_path%>

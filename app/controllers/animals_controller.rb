@@ -57,6 +57,16 @@ class AnimalsController < ApplicationController
     end
 
 
+    def destroy
+      #binding.pry
+      @farm = Farm.find(params[:farm_id])
+      @animal = Animal.find(params[:id])
+      flash[:alert] = "Animal #{@animal.name} of quantity #{@animal.quantity} was deleted off this farm."
+      @animal.destroy
+      redirect_to farm_path(@farm)
+    end
+
+
 
 
 

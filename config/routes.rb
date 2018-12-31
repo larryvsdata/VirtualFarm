@@ -17,6 +17,7 @@ Rails.application.routes.draw do
   post '/farms/sell_farm' , to: 'farms#sell_farm'
 
   delete '/farms/:id' , to: 'farms#destroy' , as: "delete_farm"
+  delete '/farms/:farm_id/animals/:id' , to: 'animals#destroy' , as: "delete_animal"
 
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 end

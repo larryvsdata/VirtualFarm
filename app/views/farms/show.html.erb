@@ -13,6 +13,15 @@ It has :
 <%end%>
 </p>
 
+
+<% if @farm.owners.include?(current_owner)%>
+    <form action="/farms/sell_farm" method="post">
+      <%= tag(:input , :type => "hidden" , :name => :farm_id , :value => @farm.id)%>
+      <input type='submit' value="Sell this farm">
+    </form>
+    <br>
+<%end%>
+
 <br><br><br>
 <% if current_owner.admin %>
   <p>Add an animal: </p>

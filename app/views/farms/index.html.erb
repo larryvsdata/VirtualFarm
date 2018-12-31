@@ -17,22 +17,27 @@
             <%= tag(:input , :type => "hidden" , :name => :farm_id , :value => farm.id)%>
             <input type='submit' value="Buy this farm">
           </form><br>
-            <%= link_to "Delete this Farm" , delete_farm_path(farm) , method: 'delete'%><br><br>
+
+          <%  if current_owner.admin %>
+                <%= link_to "Delete this Farm" , delete_farm_path(farm) , method: 'delete'%><br><br>
+          <%end%>
+
       <%end%>
     <%end%>
-  <%end%>
+<%end%>
 
   <%else%>
     <p>None at the moment. Please check back later. </p>
 
   <%end%>
- <br> <br>
-  <% if current_owner%>
-    <%=link_to "Your Farms" , owner_path(current_owner)%> <br>
-    <%=link_to "Sign Out" , signout_path , method: 'delete'%><br>
 
-    <% if current_owner.admin%>
-      <%=link_to "Add New Farm" , new_farm_path %>
-    <%end%>
 
+
+  <br> <br>
+   <% if current_owner%>
+     <%=link_to "Your Farms" , owner_path(current_owner)%> <br>
+     <%=link_to "Sign Out" , signout_path , method: 'delete'%><br>
   <%end%>
+     <% if current_owner.admin %>
+       <%=link_to "Add New Farm" , new_farm_path %>
+     <%end%>

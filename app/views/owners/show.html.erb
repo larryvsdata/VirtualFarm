@@ -1,3 +1,5 @@
+<% if @owner== current_owner%>
+
 <h1>Welcome <%= @owner.name%> to your page! </h1>
 <p>You have <%= @owner.money%>$ in your account.</p>
 
@@ -17,6 +19,21 @@
 
 <%else%>
   <p>You don't have any farms at the moment.</p>
+<%end%>
+
+<%else%>
+
+<% if @owner.farms != []%>
+<h2>Farms <%=@owner.name%> owns are: </h2>
+  <%@owner.farms.each do |farm|%>
+  <p> <%= farm.name%>:</p>
+      <ul>Net worth: <%= farm.get_value%> </ul>
+  <%end%>
+
+<%else%>
+  <p><%=@owner.name%> doesn't have any farms at the moment.</p>
+<%end%>
+
 <%end%>
 
 
