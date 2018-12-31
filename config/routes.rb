@@ -5,7 +5,7 @@ Rails.application.routes.draw do
     resources :animals , only: [:show , :new , :edit  , :create , :index]
   end
 
-  resources :owners , only: [:show ]
+  resources :owners , only: [:show , :new , :create ]
 
   root 'farms#index'
 
@@ -18,6 +18,10 @@ Rails.application.routes.draw do
 
   delete '/farms/:id' , to: 'farms#destroy' , as: "delete_farm"
   delete '/farms/:farm_id/animals/:id' , to: 'animals#destroy' , as: "delete_animal"
+
+
+  get '/owners/:id/getcoowner' , to: 'owners#get_coowner' ,  as: "gcowner"
+  post '/owners/:id/getcoowner' , to: 'owners#set_coowner'
 
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 end

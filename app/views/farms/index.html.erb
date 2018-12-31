@@ -18,7 +18,7 @@
             <input type='submit' value="Buy this farm">
           </form><br>
 
-          <%  if current_owner.admin %>
+          <%  if current_owner && current_owner.admin %>
                 <%= link_to "Delete this Farm" , delete_farm_path(farm) , method: 'delete'%><br><br>
           <%end%>
 
@@ -38,6 +38,6 @@
      <%=link_to "Your Farms" , owner_path(current_owner)%> <br>
      <%=link_to "Sign Out" , signout_path , method: 'delete'%><br>
   <%end%>
-     <% if current_owner.admin %>
+     <% if current_owner && current_owner.admin %>
        <%=link_to "Add New Farm" , new_farm_path %>
      <%end%>

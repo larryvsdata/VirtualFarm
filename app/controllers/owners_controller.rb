@@ -1,5 +1,6 @@
 class OwnersController < ApplicationController
-  before_action :set_owner , only: [:show ,:edit , :update]
+  before_action :set_owner , only: [:show ,:edit , :update , :get_coowner]
+  before_action :identify , only: [:get_coowner]
 
   def new
     @owner = Owner.new
@@ -22,10 +23,55 @@ class OwnersController < ApplicationController
   end
 
 
+  def get_coowner
+
+    if is_signed_in?
+      @farms = @owner.farms
+      @coowners = []
+      @coowners .replace(Owner.all)
+
+    #  binding.pry
+    else
+      flash[:alert] = "You need to be signed in to set co-owners."
+      redirect_to root_path
+    end
+  end
+
+  def set_coowner
+
+    farm = Farm.find(params[:cfarm])
+    coowner = Owner.find(params[:coowner])
+  #  binding.pry
+    if farm && coowner
+      if Owner.all.include?(coowner)
+        flash[:alert] = "#{farm.name} is (co-)owned #{coowner.name} already."
+        redirect_to farm_path(farm)
+      else
+        flash[:alert] = "#{farm.name} has been added to #{coowner.name} ."
+        redirect_to farm_path(farm)
+      end
+
+    else
+      flash[:alert] = "Failed to find either the farm or the owner."
+      redirect_to root_path
+    end
+
+
+  end
+
+
 
   private
   def set_owner
     @owner = Owner.find_by(id: params[:id])
+  end
+
+  def identify
+    if @owner != current_owner || current_owner.admin
+      flash[:alert] = "The owner or the admin has this privilige only. Redirecting to your homepage."
+      redirect_to owner_path(current_owner)
+    end
+
   end
 
   def owner_params
