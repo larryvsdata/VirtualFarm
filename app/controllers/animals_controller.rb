@@ -31,13 +31,18 @@ class AnimalsController < ApplicationController
 
     def show
       #binding.pry
-      if params[:farm_id]
-      #  binding.pry
-        @farm = Farm.find_by(id: params[:farm_id])
-      #  redirect_to farm_animal_path(@farm , @animal)
+      if params[:farm_id] && !Farm.find_by(id: params[:farm_id]).nil?
 
+        @farm = Farm.find_by(id: params[:farm_id])
+        if @farm && !@farm.animals.include?(@animal)
+          flash[:alert ]="This farm does not have this animal."
+          redirect_to farm_path(@farm)
+        end
+
+      #  redirect_to farm_animal_path(@farm , @animal)
+      #  binding.pry
     else
-      flash[:alert] = "Animals can be reached through farms "
+      flash[:alert] = "Animal-farm combo is incorrect."
       redirect_to root_path
       end
     end
@@ -80,7 +85,11 @@ class AnimalsController < ApplicationController
   end
 
   def set_animal
-    @animal = Animal.find(params[:id])
+    @animal = Animal.find_by(id: params[:id])
+    if !@animal
+      flash[:alert] = "This animal does not exist."
+      redirect_to root_path
+    end
   end
 
   def animal_params

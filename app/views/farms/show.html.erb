@@ -14,12 +14,14 @@ It has :
 </p>
 
 
-<% if @farm.owners.include?(current_owner)%>
+<% if current_owner && @farm.owners.include?(current_owner)%>
     <form action="/farms/sell_farm" method="post">
       <%= tag(:input , :type => "hidden" , :name => :farm_id , :value => @farm.id)%>
       <input type='submit' value="Sell this farm">
     </form>
     <br>
+<%= link_to "Back to Owner's page" , owner_path(current_owner)%><br>
+
 <%end%>
 
 <br><br><br>

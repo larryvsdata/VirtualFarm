@@ -10,6 +10,7 @@ Farm.all.delete_all
 Animal.all.delete_all
 Owner.all.delete_all
 
+
 #Farms
 
 farm1 = Farm.new(name: "Billy's Ranch")
@@ -40,6 +41,7 @@ owner4 = Owner.new(name: "Ed", money: 35000 , password: "1234")
 owner4.save
 owner5 = Owner.new(name: "Ethan", money: 57000 , password: "1234")
 owner5.save
+
 
 
 
@@ -110,3 +112,20 @@ farm15.save
 
 farm16.animals.build(name: "Angus" , unit_price: 900 , quantity: 17)
 farm16.save
+
+owner2.farms << farm1
+owner2.farms << farm2
+owner2.save
+
+owner3.farms << farm3
+owner3.farms << farm4
+owner3.save
+
+
+owner3.farms << farm5
+owner3.farms << farm6
+owner3.save
+
+owner4.farms << farm7
+owner4.farms << farm8
+owner4.save

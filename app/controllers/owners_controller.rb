@@ -10,14 +10,15 @@ class OwnersController < ApplicationController
     #binding.pry
     @owner=Owner.new(owner_params)
 
-    if @owner.save
+    if @owner.valid?
+      @owner.save
     #  binding.pry
       session[:owner_id] = @owner.id
       flash[:notice] = "Welcome to Virtual Park!"
       redirect_to owner_path(@owner)
     else
       flash[:notice] = "Unable to log in."
-      redirect_to new_owner_path
+      render :new
     end
 
   end
@@ -38,16 +39,18 @@ class OwnersController < ApplicationController
   end
 
   def set_coowner
-
-    farm = Farm.find(params[:cfarm])
+    #binding.pry
+    farm = Farm.find(params[:farm])
     coowner = Owner.find(params[:coowner])
   #  binding.pry
     if farm && coowner
-      if Owner.all.include?(coowner)
-        flash[:alert] = "#{farm.name} is (co-)owned #{coowner.name} already."
+      if farm.owners.include?(coowner)
+        flash[:alert] = "#{farm.name} is (co-)owned by #{coowner.name} already."
         redirect_to farm_path(farm)
       else
+        farm.owners << coowner
         flash[:alert] = "#{farm.name} has been added to #{coowner.name} ."
+      #  binding.pry
         redirect_to farm_path(farm)
       end
 
@@ -64,6 +67,10 @@ class OwnersController < ApplicationController
   private
   def set_owner
     @owner = Owner.find_by(id: params[:id])
+    if !@owner
+      flash[:alert] = "This owner does not exist."
+      redirect_to root_path
+    end
   end
 
   def identify

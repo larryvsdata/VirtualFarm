@@ -12,12 +12,13 @@ skip_before_action :verify_authenticity_token
     #binding.pry
     @farm = Farm.new(farm_params)
 
-    if @farm.save
+    if @farm.valid?
+      @farm.save
       flash[:alert] = "Farm #{@farm.name} created, successfully."
       redirect_to farm_path(@farm)
     else
       flash[:alert] = "Failed to create farm."
-      redirect_to new_farm_path
+      render :new
     end
 
   end
@@ -49,23 +50,24 @@ skip_before_action :verify_authenticity_token
   end
 
   def buy_farm
-    owner = current_owner
+    @owner = current_owner
     farm = Farm.find_by_id(params[:farm_id])
-    message= owner.buy_farm(farm)
+    message= @owner.buy_farm(farm)
     flash[:alert]=message
   #  binding.pry
-    owner.save
-    redirect_to owner_path(owner.id)
+    @owner.save
+    redirect_to owner_path(@owner)
   end
 
 
   def sell_farm
-    owner = current_owner
+    #binding.pry
+    @owner = current_owner
     farm = Farm.find_by_id(params[:farm_id])
-    message= owner.sell_farm(farm)
-    owner.save
+    message= @owner.sell_farm(farm)
+    @owner.save
     flash[:alert]=message
-  #  binding.pry
+  #
     redirect_to root_path
   end
 
@@ -89,7 +91,14 @@ skip_before_action :verify_authenticity_token
 
   private
   def set_farm
-    @farm = Farm.find(params[:id])
+  #  binding.pry
+  farm = Farm.find_by(id: params[:id])
+    if farm.nil?
+      flash[:alert] = "This farm does not exist."
+    #  binding.pry
+      redirect_to root_path
+    end
+    @farm = Farm.find_by(id: params[:id])
   end
 
   def farm_params
