@@ -23,5 +23,7 @@ Rails.application.routes.draw do
   get '/owners/:id/getcoowner' , to: 'owners#get_coowner' ,  as: "gcowner"
   post '/owners/:id/getcoowner' , to: 'owners#set_coowner'
 
+  get '/auth/:provider/callback', to: 'sessions#github_login'
+
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 end
